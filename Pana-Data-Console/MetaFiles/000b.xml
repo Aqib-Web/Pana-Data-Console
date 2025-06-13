@@ -1,0 +1,314 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<GENERAL>
+  <EVENTINFO>
+    <Recorder model="WJ-VR30" serial="NBA00143" />
+    <EventID>nba00143_20160511151207e0</EventID>
+    <LoginInfo>
+      <Login ts="2015-07-20,20:23:29">
+        <Officers>
+          <Officer id="1">
+            <First />
+            <Middle />
+            <Last />
+            <O-ID />
+          </Officer>
+          <Officer id="2">
+            <First />
+            <Middle />
+            <Last />
+            <O-ID />
+          </Officer>
+        </Officers>
+        <Field id="1" />
+        <Field id="2" />
+        <Field id="3" />
+        <Field id="4" />
+        <Field id="5">Lobby Int Rm 103</Field>
+      </Login>
+    </LoginInfo>
+  </EVENTINFO>
+  <EVENTINFO>
+    <FileList>
+      <File ch="2" split="0" dtype="v" size="372797856">
+        <F-Name>nba00143_20160511151207e0_20160511151156_02_000v.av3</F-Name>
+        <EV>G1</EV>
+        <StopEV>DIV-STD</StopEV>
+        <PreST>2016-05-11,15:11:56</PreST>
+        <RecST>2016-05-11,15:12:07</RecST>
+        <RecET>2016-05-11,15:21:57</RecET>
+        <RecDR>54029340</RecDR>
+      </File>
+      <File ch="1" split="0" dtype="a" size="5361157">
+        <F-Name>nba00143_20160511151207e0_20160511151157_01_000a.av3</F-Name>
+        <EV>G1</EV>
+        <StopEV>DIV-STD</StopEV>
+        <PreST>2016-05-11,15:11:57</PreST>
+        <RecST>2016-05-11,15:12:07</RecST>
+        <RecET>2016-05-11,15:21:56</RecET>
+        <RecDR>53938800</RecDR>
+      </File>
+      <File ch="3" split="0" dtype="a" size="5361157">
+        <F-Name>nba00143_20160511151207e0_20160511151157_03_000a.av3</F-Name>
+        <EV>G1</EV>
+        <StopEV>DIV-STD</StopEV>
+        <PreST>2016-05-11,15:11:57</PreST>
+        <RecST>2016-05-11,15:12:07</RecST>
+        <RecET>2016-05-11,15:21:56</RecET>
+        <RecDR>53938800</RecDR>
+      </File>
+      <File ch="0" split="0" dtype="m" size="14098">
+        <F-Name>nba00143_20160511151207e0_20160511151156_00_000m.xml</F-Name>
+      </File>
+    </FileList>
+  </EVENTINFO>
+  <EVENTINFO>
+    <FileList>
+      <File ch="2" split="1" dtype="v" size="369535400">
+        <F-Name>nba00143_20160511151207e0_20160511152157_02_001v.av3</F-Name>
+        <EV>G1</EV>
+        <StopEV>DIV-STD</StopEV>
+        <PreST>2016-05-11,15:21:57</PreST>
+        <RecST>2016-05-11,15:21:57</RecST>
+        <RecET>2016-05-11,15:31:57</RecET>
+        <RecDR>54017370</RecDR>
+      </File>
+      <File ch="1" split="1" dtype="a" size="5371571">
+        <F-Name>nba00143_20160511151207e0_20160511152156_01_001a.av3</F-Name>
+        <EV>G1</EV>
+        <StopEV>DIV-STD</StopEV>
+        <PreST>2016-05-11,15:21:56</PreST>
+        <RecST>2016-05-11,15:21:56</RecST>
+        <RecET>2016-05-11,15:31:57</RecET>
+        <RecDR>54043200</RecDR>
+      </File>
+      <File ch="3" split="1" dtype="a" size="5371571">
+        <F-Name>nba00143_20160511151207e0_20160511152156_03_001a.av3</F-Name>
+        <EV>G1</EV>
+        <StopEV>DIV-STD</StopEV>
+        <PreST>2016-05-11,15:21:56</PreST>
+        <RecST>2016-05-11,15:21:56</RecST>
+        <RecET>2016-05-11,15:31:57</RecET>
+        <RecDR>54043200</RecDR>
+      </File>
+      <File ch="0" split="1" dtype="m" size="14003">
+        <F-Name>nba00143_20160511151207e0_20160511152156_00_001m.xml</F-Name>
+      </File>
+    </FileList>
+  </EVENTINFO>
+  <EVENTINFO>
+    <FileList>
+      <File ch="2" split="2" dtype="v" size="371045136">
+        <F-Name>nba00143_20160511151207e0_20160511153157_02_002v.av3</F-Name>
+        <EV>G1</EV>
+        <StopEV>DIV-STD</StopEV>
+        <PreST>2016-05-11,15:31:57</PreST>
+        <RecST>2016-05-11,15:31:57</RecST>
+        <RecET>2016-05-11,15:41:57</RecET>
+        <RecDR>54017280</RecDR>
+      </File>
+      <File ch="1" split="2" dtype="a" size="5369695">
+        <F-Name>nba00143_20160511151207e0_20160511153157_01_002a.av3</F-Name>
+        <EV>G1</EV>
+        <StopEV>DIV-STD</StopEV>
+        <PreST>2016-05-11,15:31:57</PreST>
+        <RecST>2016-05-11,15:31:57</RecST>
+        <RecET>2016-05-11,15:41:57</RecET>
+        <RecDR>54025200</RecDR>
+      </File>
+      <File ch="3" split="2" dtype="a" size="5369695">
+        <F-Name>nba00143_20160511151207e0_20160511153157_03_002a.av3</F-Name>
+        <EV>G1</EV>
+        <StopEV>DIV-STD</StopEV>
+        <PreST>2016-05-11,15:31:57</PreST>
+        <RecST>2016-05-11,15:31:57</RecST>
+        <RecET>2016-05-11,15:41:57</RecET>
+        <RecDR>54025200</RecDR>
+      </File>
+      <File ch="0" split="2" dtype="m" size="12893">
+        <F-Name>nba00143_20160511151207e0_20160511153157_00_002m.xml</F-Name>
+      </File>
+    </FileList>
+  </EVENTINFO>
+  <EVENTINFO>
+    <FileList>
+      <File ch="2" split="3" dtype="v" size="378928701">
+        <F-Name>nba00143_20160511151207e0_20160511154157_02_003v.av3</F-Name>
+        <EV>G1</EV>
+        <StopEV>DIV-STD</StopEV>
+        <PreST>2016-05-11,15:41:57</PreST>
+        <RecST>2016-05-11,15:41:57</RecST>
+        <RecET>2016-05-11,15:51:58</RecET>
+        <RecDR>54023490</RecDR>
+      </File>
+      <File ch="1" split="3" dtype="a" size="5370099">
+        <F-Name>nba00143_20160511151207e0_20160511154157_01_003a.av3</F-Name>
+        <EV>G1</EV>
+        <StopEV>DIV-STD</StopEV>
+        <PreST>2016-05-11,15:41:57</PreST>
+        <RecST>2016-05-11,15:41:57</RecST>
+        <RecET>2016-05-11,15:51:57</RecET>
+        <RecDR>54028800</RecDR>
+      </File>
+      <File ch="3" split="3" dtype="a" size="5370099">
+        <F-Name>nba00143_20160511151207e0_20160511154157_03_003a.av3</F-Name>
+        <EV>G1</EV>
+        <StopEV>DIV-STD</StopEV>
+        <PreST>2016-05-11,15:41:57</PreST>
+        <RecST>2016-05-11,15:41:57</RecST>
+        <RecET>2016-05-11,15:51:57</RecET>
+        <RecDR>54028800</RecDR>
+      </File>
+      <File ch="0" split="3" dtype="m" size="12771">
+        <F-Name>nba00143_20160511151207e0_20160511154157_00_003m.xml</F-Name>
+      </File>
+    </FileList>
+  </EVENTINFO>
+  <EVENTINFO>
+    <FileList>
+      <File ch="2" split="4" dtype="v" size="385621466">
+        <F-Name>nba00143_20160511151207e0_20160511155158_02_004v.av3</F-Name>
+        <EV>G1</EV>
+        <StopEV>DIV-STD</StopEV>
+        <PreST>2016-05-11,15:51:58</PreST>
+        <RecST>2016-05-11,15:51:58</RecST>
+        <RecET>2016-05-11,16:01:58</RecET>
+        <RecDR>54023310</RecDR>
+      </File>
+      <File ch="1" split="4" dtype="a" size="5369719">
+        <F-Name>nba00143_20160511151207e0_20160511155157_01_004a.av3</F-Name>
+        <EV>G1</EV>
+        <StopEV>DIV-STD</StopEV>
+        <PreST>2016-05-11,15:51:57</PreST>
+        <RecST>2016-05-11,15:51:57</RecST>
+        <RecET>2016-05-11,16:01:58</RecET>
+        <RecDR>54025200</RecDR>
+      </File>
+      <File ch="3" split="4" dtype="a" size="5369719">
+        <F-Name>nba00143_20160511151207e0_20160511155157_03_004a.av3</F-Name>
+        <EV>G1</EV>
+        <StopEV>DIV-STD</StopEV>
+        <PreST>2016-05-11,15:51:57</PreST>
+        <RecST>2016-05-11,15:51:57</RecST>
+        <RecET>2016-05-11,16:01:58</RecET>
+        <RecDR>54025200</RecDR>
+      </File>
+      <File ch="0" split="4" dtype="m" size="12643">
+        <F-Name>nba00143_20160511151207e0_20160511155157_00_004m.xml</F-Name>
+      </File>
+    </FileList>
+  </EVENTINFO>
+  <EVENTINFO>
+    <FileList>
+      <File ch="2" split="5" dtype="v" size="361042392">
+        <F-Name>nba00143_20160511151207e0_20160511160158_02_005v.av3</F-Name>
+        <EV>G1</EV>
+        <StopEV>DIV-STD</StopEV>
+        <PreST>2016-05-11,16:01:58</PreST>
+        <RecST>2016-05-11,16:01:58</RecST>
+        <RecET>2016-05-11,16:11:59</RecET>
+        <RecDR>54023310</RecDR>
+      </File>
+      <File ch="1" split="5" dtype="a" size="5370075">
+        <F-Name>nba00143_20160511151207e0_20160511160158_01_005a.av3</F-Name>
+        <EV>G1</EV>
+        <StopEV>DIV-STD</StopEV>
+        <PreST>2016-05-11,16:01:58</PreST>
+        <RecST>2016-05-11,16:01:58</RecST>
+        <RecET>2016-05-11,16:11:58</RecET>
+        <RecDR>54028800</RecDR>
+      </File>
+      <File ch="3" split="5" dtype="a" size="5370075">
+        <F-Name>nba00143_20160511151207e0_20160511160158_03_005a.av3</F-Name>
+        <EV>G1</EV>
+        <StopEV>DIV-STD</StopEV>
+        <PreST>2016-05-11,16:01:58</PreST>
+        <RecST>2016-05-11,16:01:58</RecST>
+        <RecET>2016-05-11,16:11:58</RecET>
+        <RecDR>54028800</RecDR>
+      </File>
+      <File ch="0" split="5" dtype="m" size="12027">
+        <F-Name>nba00143_20160511151207e0_20160511160158_00_005m.xml</F-Name>
+      </File>
+    </FileList>
+  </EVENTINFO>
+  <EVENTINFO>
+    <FileList>
+      <File ch="2" split="6" dtype="v" size="292402173">
+        <F-Name>nba00143_20160511151207e0_20160511161159_02_006v.av3</F-Name>
+        <EV>G1</EV>
+        <StopEV>STOPG2</StopEV>
+        <PreST>2016-05-11,16:11:59</PreST>
+        <RecST>2016-05-11,16:11:59</RecST>
+        <RecET>2016-05-11,16:19:57</RecET>
+        <RecDR>43034580</RecDR>
+      </File>
+      <File ch="1" split="6" dtype="a" size="4283465">
+        <F-Name>nba00143_20160511151207e0_20160511161158_01_006a.av3</F-Name>
+        <EV>G1</EV>
+        <StopEV>STOPG2</StopEV>
+        <PreST>2016-05-11,16:11:58</PreST>
+        <RecST>2016-05-11,16:11:58</RecST>
+        <RecET>2016-05-11,16:19:57</RecET>
+        <RecDR>43092000</RecDR>
+      </File>
+      <File ch="3" split="6" dtype="a" size="4283465">
+        <F-Name>nba00143_20160511151207e0_20160511161158_03_006a.av3</F-Name>
+        <EV>G1</EV>
+        <StopEV>STOPG2</StopEV>
+        <PreST>2016-05-11,16:11:58</PreST>
+        <RecST>2016-05-11,16:11:58</RecST>
+        <RecET>2016-05-11,16:19:57</RecET>
+        <RecDR>43092000</RecDR>
+      </File>
+      <File ch="0" split="6" dtype="m" size="11520">
+        <F-Name>nba00143_20160511151207e0_20160511161158_00_006m.xml</F-Name>
+      </File>
+    </FileList>
+  </EVENTINFO>
+  <EVENTINFO>
+    <Hash-Key>1406bd34132a784ace042def776c5bbfae2db26f8371671b09f63807a6092b79c49cc17f003fddb612ed2fa0d18dbd82af5a14ebcc55412221849ae02098e37d4b8b4145dd01e53302401b33079f848221f260e5d0e3d4dc5f359ef8e08d847252d6f90843df7b959dcb735cc74c3b083d5cc5edd6df03609091204d714ab2ee</Hash-Key>
+  </EVENTINFO>
+  <METADATA_USERCHANGES>
+    <Officers>
+      <Officer no="1">
+        <First>John</First>
+        <Middle></Middle>
+        <Last>Ratajczyk</Last>
+        <O-ID>jratajczyk</O-ID>
+      </Officer>
+      <Officer no="2">
+        <First></First>
+        <Middle></Middle>
+        <Last></Last>
+        <O-ID></O-ID>
+      </Officer>
+    </Officers>
+    <V-ID>Lobby Int Rm 103</V-ID>
+    <Area></Area>
+    <UnitName></UnitName>
+    <Agency></Agency>
+    <Shift>
+      <PTN></PTN>
+    </Shift>
+  </METADATA_USERCHANGES>
+  <USERINFO>
+    <INFO_ID>CFNBC16-000030 - Danny Reid Fors Interveiw</INFO_ID>
+    <DATA>BC16-000030 - Danny Reid Fors Interveiw</DATA>
+  </USERINFO>
+  <BOOKMARK>
+    <VID>Lobby Int Rm 103</VID>
+    <AREA></AREA>
+    <TS>05-11-2016 15:11:56</TS>
+    <CH>*</CH>
+    <EVENTTYPE>Interview</EVENTTYPE>
+    <DESC>Danny Reid Fors</DESC>
+  </BOOKMARK>
+  <BOOKMARK>
+    <VID>Lobby Int Rm 103</VID>
+    <AREA></AREA>
+    <TS>05-11-2016 15:11:58</TS>
+    <CH>*</CH>
+    <EVENTTYPE>Statement - CSC/Arson</EVENTTYPE>
+    <DESC></DESC>
+  </BOOKMARK>
+</GENERAL>

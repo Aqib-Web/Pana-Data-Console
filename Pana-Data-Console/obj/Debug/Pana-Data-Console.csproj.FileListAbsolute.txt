@@ -1,0 +1,10 @@
+C:\Users\Muhammad.aqib\source\repos\Pana-Data-Console\Pana-Data-Console\bin\Debug\Pana-Data-Console.exe.config
+C:\Users\Muhammad.aqib\source\repos\Pana-Data-Console\Pana-Data-Console\bin\Debug\Pana-Data-Console.exe
+C:\Users\Muhammad.aqib\source\repos\Pana-Data-Console\Pana-Data-Console\bin\Debug\Pana-Data-Console.pdb
+C:\Users\Muhammad.aqib\source\repos\Pana-Data-Console\Pana-Data-Console\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Muhammad.aqib\source\repos\Pana-Data-Console\Pana-Data-Console\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Muhammad.aqib\source\repos\Pana-Data-Console\Pana-Data-Console\obj\Debug\Pana-Data-Console.csprojAssemblyReference.cache
+C:\Users\Muhammad.aqib\source\repos\Pana-Data-Console\Pana-Data-Console\obj\Debug\Pana-Data-Console.csproj.CoreCompileInputs.cache
+C:\Users\Muhammad.aqib\source\repos\Pana-Data-Console\Pana-Data-Console\obj\Debug\Pana-Data-Console.csproj.CopyComplete
+C:\Users\Muhammad.aqib\source\repos\Pana-Data-Console\Pana-Data-Console\obj\Debug\Pana-Data-Console.exe
+C:\Users\Muhammad.aqib\source\repos\Pana-Data-Console\Pana-Data-Console\obj\Debug\Pana-Data-Console.pdb
