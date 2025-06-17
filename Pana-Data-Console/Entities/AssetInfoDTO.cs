@@ -14,11 +14,15 @@ namespace Pana_Data_Console.Entities
         public long DurationInMs { get; set; }
         public DateTime RecordingStarted { get; set; }
         public DateTime RecordingEnded { get; set; }
+        public int TotalSegments { get; set; }
         public string CameraName { get; set; }
         public IRSAMediaTypeEnum MediaType { get; set; }
-        public eMediaStatus AssetStatus { get; set; }
-        public eMediaState AssetState { get; set; }
         public bool IsMaster { get; set; }
+
+        public string UnitID { get; set; }
+        public string VehicleID { get; set; }
+
+        public string BookmarksCsv { get; set; }
     }
 
 }

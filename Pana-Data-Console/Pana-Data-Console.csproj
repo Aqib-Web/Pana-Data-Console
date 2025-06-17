@@ -45,8 +45,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\Helper.cs" />
     <Compile Include="Entities\AssetInfo.cs" />
     <Compile Include="Entities\AssetInfoDTO.cs" />
+    <Compile Include="Entities\Bookmark.cs" />
     <Compile Include="Entities\CommonEntities.cs" />
     <Compile Include="PanasonicMetadataParser.cs" />
     <Compile Include="Program.cs" />
