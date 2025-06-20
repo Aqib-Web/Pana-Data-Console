@@ -1,5 +1,5 @@
 using System;
-using System.IO;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -48,73 +48,89 @@ namespace Pana_Data_Console
             //    }
             //}
 
-            var payload = new
+
+
+            var payload = new EMV4Asset
             {
-                categories = new string[] { },
-                assets = new
+                Categories = new List<Category>(),  // <------EMPTY FOR NOW
+                Assets = new Assets
                 {
-                    master = new
+                    Master = new Asset
                     {
-                        id = "65011",
-                        name = assetInfo.AssetID,
+                        Id = "65011",
                         DeviceTypeCategory = "BodyWorn",
-                        typeOfAsset = assetInfo.MediaType.ToString(),
-                        status = "Uploading",
-                        state = "Normal",
-                        unitId = 1,
-                        isRestrictedView = false,
-                        duration = assetInfo.DurationInMs,
-                        //recording = new
-                        //{
-                        //    started = assetInfo.RecordingStarted,
-                        //    ended = assetInfo.RecordingEnded
-                        //},
-                        recording = new RecordingInfo
+                        Name = assetInfo.AssetID + "_001",  // <= <= <=
+                        TypeOfAsset = assetInfo.MediaType.ToString(),  // <= <= <=
+                        Status = "Uploading",
+                        State = "Normal",
+                        UnitId = 1,
+                        IsRestrictedView = false,
+                        Duration = assetInfo.DurationInMs,  // <= <= <=
+
+                        Recording = new RecordingInfo
                         {
-                            Started = assetInfo.RecordingStarted,
-                            Ended = assetInfo.RecordingEnded
+                            Started = assetInfo.RecordingStarted,  // <= <= <=
+                            Ended = assetInfo.RecordingEnded  // <= <= <=
                         },
-                        buffering = new { pre = 0, post = 0 },
-                        owners = new[] { new { CMTFieldValue = "1" } },
-                        bookMarks = new object[] { },
-                        notes = new object[] { },
-                        audioDevice = (string)null,
-                        camera = (string)null,
-                        isOverlaid = false,
-                        recordedByCSV = "admin@getac.com",
-                        files = new[]
+
+                        Buffering = new Buffering
                         {
-                        new {
-                            id = 0,
-                            assetId = 0,
-                            filesId = "65011",
-                            accessCode = "XsWmuJeanfoK+Z8vZ3L1csB1RU3NqjLUjDvy+UAonueEyJKQukBEihijmVN11tQ+kAIIQfOoaYQBEKdtDal40w==",
-                            name = "006_test_file_name",
-                            type = "Video",
-                            extension = ".mp4",
-                            url = "https://g204redactiontest.blob.core.usgovcloudapi.net/tn-3/us-1/Evidence/006_test_file_name.mp4",
-                            size = assetInfo.FileSizeInBytes,
-                            duration = assetInfo.DurationInMs,
-                            recording = new {
-                                started = assetInfo.RecordingStarted,
-                                ended = assetInfo.RecordingEnded
-                            },
-                            sequence = 1,
-                            checksum = (string)null,
-                            version = ""
+                            Pre = 0,
+                            Post = 0
+                        },
+
+                        Owners = new List<CMTFieldValueWrapper>
+                        {
+                            new CMTFieldValueWrapper { Value = 1 }
+                        },
+
+                        BookMarks = new List<BookMark> (), // <------EMPTY FOR NOW
+                        Notes = new List<Note> (), // <------EMPTY FOR NOW
+
+                        AudioDevice = (string)null,
+                        Camera = (string)null,
+                        IsOverlaid = false,
+                        RecordedByCSV = "admin@getac.com",
+
+                        Files = new List<FileInfo>
+                        {
+                            new FileInfo
+                            {
+                                Id = 0,
+                                AssetId = 0,
+                                FilesId = "65011",
+                                AccessCode = "XsWmuJeanfoK+Z8vZ3L1csB1RU3NqjLUjDvy+UAonueEyJKQukBEihijmVN11tQ+kAIIQfOoaYQBEKdtDal40w==",
+                                Name = assetInfo.AssetID + "_001",  // <= <= <=
+                                Type = assetInfo.MediaType.ToString(), // <= <= <=
+                                Extension = ".mp4",
+                                URL = $"https://g204redactiontest.blob.core.usgovcloudapi.net/tn-3/us-1/Evidence/{assetInfo.AssetID}_001.mp4",  // <= <= <=
+                                Size = assetInfo.FileSizeInBytes, // <= <= <=
+                                Duration = assetInfo.DurationInMs, // <= <= <=
+                                Recording = new RecordingInfo
+                                {
+                                    Started = assetInfo.RecordingStarted,  // <= <= <=
+                                    Ended = assetInfo.RecordingEnded  // <= <= <=
+                                },
+                                Sequence = 1,
+                                Checksum = null,
+                                Version = "",
                             }
                         },
-                        @lock = (string)null
+                        Lock = (string)null
                     },
-                    children = new object[] { }
+                    Children = new List<Asset>(), // <------EMPTY FOR NOW
                 },
-                stationId = new { CMTFieldValue = 205007 },
-                tag = (string)null,
-                version = ""
+
+                StationId = new CMTFieldValueWrapper
+                {
+                    Value = 205011
+                },
+                Tag = (string)null,
+                Version = ""
             };
             
             var json = JsonConvert.SerializeObject(payload);
-            //SendPost(json);
+            SendPost(json);
 
             string payloadJsonFormatted = JsonConvert.SerializeObject(payload, jsonSettings);
             Console.WriteLine(payloadJsonFormatted);
@@ -124,9 +140,8 @@ namespace Pana_Data_Console
 
         static void SendPost(string jsonPayload)
         {
-            var url = "https://dev-evm4-m.irsavideo.com/api/v1/Evidences"; // Replace with actual URL
-            var bearerToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJUZW5hbnRJZCI6IjE5IiwiVXNlcklkIjoiMSIsIkFzc2lnbmVkR3JvdXBzIjoiW3tcIklkXCI6MSxcIlBlcm1pc3Npb25cIjoxfV0iLCJBc3NpZ25lZE1vZHVsZXMiOiIxLDIsMyw0LDUsNiw3LDgsOSwxMCwxMSwxMiwxMywxNCwxNSwxNywxOCwxOSwyMCwyMSwyMiwyMywyNCwyNSwyNiwyNywyOCwyOSwzMCwzMSwzMiwzMywzNCwzNSwzNiwzNywzOCwzOSw0MCw0MSw0Miw0Myw0NCw0NSw0Niw0Nyw0OCw0OSw1MCw1MSw1Miw1Myw1NCw1NSw1Niw1Nyw2MCw2MSw2Miw2Myw2NCw3MCw3MSw3Miw3Myw3NCw3NSw3Nyw3OCw3OSw4MCw4MSw4Miw4Myw4NCw4NSw4Niw4Nyw4OCw4OSw5MCw5MSw5Miw5Myw5NCw5NSw5Niw5Nyw5OCw5OSwxMDEsMTAyLDEwMywxMDQsMTA1LDEwNiwxMDcsMTA5LDExMCwxMTIsMTEzLDExNCwxMTUsMTE2LDExNywxMTgsMTE5LDEyMCwxMjEsMTIyIiwiTG9naW5JZCI6ImFkbWluQGdldGFjLmNvbSIsIkZOYW1lIjoiU3VwZXIiLCJMTmFtZSI6IjEyMyIsIldvcmtzcGFjZUlkIjoiIiwiU3F1YWRJbmZvcyI6IltdIiwibmJmIjoxNzUwMzI4MTA1LCJleHAiOjE3NTAzMzE3MDUsImlhdCI6MTc1MDMyODEwNX0.Yd1Lq80HIwZ2bv7E3IRdwDJBswXVoK_sg1JQm4zwVyo"; // Copy from your browser cookie
-
+            var url = "https://dev-evm4-m.irsavideo.com/api/v1/Evidences";
+            var bearerToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJUZW5hbnRJZCI6IjE5IiwiVXNlcklkIjoiMSIsIkFzc2lnbmVkR3JvdXBzIjoiW3tcIklkXCI6MSxcIlBlcm1pc3Npb25cIjoxfV0iLCJBc3NpZ25lZE1vZHVsZXMiOiIxLDIsMyw0LDUsNiw3LDgsOSwxMCwxMSwxMiwxMywxNCwxNSwxNywxOCwxOSwyMCwyMSwyMiwyMywyNCwyNSwyNiwyNywyOCwyOSwzMCwzMSwzMiwzMywzNCwzNSwzNiwzNywzOCwzOSw0MCw0MSw0Miw0Myw0NCw0NSw0Niw0Nyw0OCw0OSw1MCw1MSw1Miw1Myw1NCw1NSw1Niw1Nyw2MCw2MSw2Miw2Myw2NCw3MCw3MSw3Miw3Myw3NCw3NSw3Nyw3OCw3OSw4MCw4MSw4Miw4Myw4NCw4NSw4Niw4Nyw4OCw4OSw5MCw5MSw5Miw5Myw5NCw5NSw5Niw5Nyw5OCw5OSwxMDEsMTAyLDEwMywxMDQsMTA1LDEwNiwxMDcsMTA5LDExMCwxMTIsMTEzLDExNCwxMTUsMTE2LDExNywxMTgsMTE5LDEyMCwxMjEsMTIyIiwiTG9naW5JZCI6ImFkbWluQGdldGFjLmNvbSIsIkZOYW1lIjoiU3VwZXIiLCJMTmFtZSI6IjEyMyIsIldvcmtzcGFjZUlkIjoiIiwiU3F1YWRJbmZvcyI6IltdIiwibmJmIjoxNzUwNDI1NjAzLCJleHAiOjE3NTA0MjkyMDMsImlhdCI6MTc1MDQyNTYwM30.d7d9Xv01PKXmv9uUAEDJA28S2xK0ZhsEC3o5CLRS9zw";
             using (var client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Clear();

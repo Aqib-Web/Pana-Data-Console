@@ -12,7 +12,7 @@ namespace Pana_Data_Console.Entities
         {
             public DateTime Started { get; set; }
             public DateTime Ended { get; set; }
-            public int TimeOffset { get; set; }
+            //public int TimeOffset { get; set; }
         }
 
         public class Buffering
@@ -31,29 +31,31 @@ namespace Pana_Data_Console.Entities
 
         public class CMTFieldValueWrapper
         {
-            public int CMTFieldValue { get; set; }
+            [JsonProperty("CMTFieldValue")]
+            public int Value { get; set; }
         }
 
         public class FileInfo
         {
-            public string Id { get; set; }
-            public string AssetId { get; set; }
-            public int FilesId { get; set; }
+            public int Id { get; set; }
+            public int AssetId { get; set; }
+            public string FilesId { get; set; }
+            public string AccessCode { get; set; }
             public string Name { get; set; }
             public string Type { get; set; }
             public string Extension { get; set; }
             public string URL { get; set; }
-            public int Size { get; set; }
-            public int Duration { get; set; }
+            public long Size { get; set; }
+            public long Duration { get; set; }
             public RecordingInfo Recording { get; set; }
             public int Sequence { get; set; }
             public Checksum Checksum { get; set; }
             public string Version { get; set; }
-            public DateTime CreatedOn { get; set; }
-            public DateTime ModifiedOn { get; set; }
+            //public DateTime CreatedOn { get; set; }
+            //public DateTime ModifiedOn { get; set; }
         }
 
-        public class Bookmark
+        public class BookMark
         {
             public string Id { get; set; }
             public string AssetId { get; set; }
@@ -67,13 +69,17 @@ namespace Pana_Data_Console.Entities
             public CMTFieldValueWrapper UserInfo { get; set; }
         }
 
-        // Mid-level models
-        public class Owner
+        public class Note
         {
-            public int CMTFieldValue { get; set; }
+            public string Id { get; set; }
+            public DateTime? NoteTime { get; set; }
+            public string Description { get; set; }
+            public int? Position { get; set; }
+            public string MadeBy { get; set; }
         }
 
-        public class Field
+    // Mid-level models
+    public class Field
         {
             public string Id { get; set; }
             public string Key { get; set; }
@@ -109,23 +115,26 @@ namespace Pana_Data_Console.Entities
         public class Asset
         {
             public string Id { get; set; }
+            public string DeviceTypeCategory { get; set; }
             public string Name { get; set; }
             public string TypeOfAsset { get; set; }
             public string Status { get; set; }
             public string State { get; set; }
             public int UnitId { get; set; }
             public bool IsRestrictedView { get; set; }
-            public int Duration { get; set; }
+            public long Duration { get; set; }
             public RecordingInfo Recording { get; set; }
             public Buffering Buffering { get; set; }
+            public List<CMTFieldValueWrapper> Owners { get; set; }
+            public List<BookMark> BookMarks { get; set; }
+            public List<Note> Notes { get; set; }
+            public string AudioDevice { get; set; }
             public string Camera { get; set; }
             public bool IsOverlaid { get; set; }
             public string RecordedByCSV { get; set; }
-            public List<Bookmark> BookMarks { get; set; }
-            public List<FileInfo> Files { get; set; }
-            public List<Owner> Owners { get; set; }
             public string Version { get; set; }
-            public DateTime CreatedOn { get; set; }
+            public List<FileInfo> Files { get; set; }
+            public string Lock { get; set; } 
 
         }
 
@@ -142,12 +151,12 @@ namespace Pana_Data_Console.Entities
             public List<Category> Categories { get; set; }
             public List<SecurityDescriptor> SecurityDescriptors { get; set; }
             public Assets Assets { get; set; }
-            public DateTime ExpireOn { get; set; }
             public CMTFieldValueWrapper StationId { get; set; }
             public string Tag { get; set; }
             public string Version { get; set; }
-            public DateTime CreatedOn { get; set; }
-            public DateTime ModifiedOn { get; set; }
+            //public DateTime ExpireOn { get; set; }
+            //public DateTime CreatedOn { get; set; }
+            //public DateTime ModifiedOn { get; set; }
         }
     }
 }
