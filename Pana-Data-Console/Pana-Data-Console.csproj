@@ -51,6 +51,7 @@
     <Compile Include="Entities\EMV4AssetPayloadModels.cs" />
     <Compile Include="Entities\Bookmark.cs" />
     <Compile Include="Entities\CommonEntities.cs" />
+    <Compile Include="PanasonicFolderParser.cs" />
     <Compile Include="PanasonicMetadataParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

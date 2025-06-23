@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Pana_Data_Console.Entities
 {
-    class EMV4AssetPayloadModels
+    public class EMV4AssetPayloadModels
     {
 
         public class RecordingInfo
