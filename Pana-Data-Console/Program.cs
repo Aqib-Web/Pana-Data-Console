@@ -33,26 +33,8 @@ namespace Pana_Data_Console
                     //NullValueHandling = NullValueHandling.Ignore
                 };
 
-            //string assetInfoJson = JsonConvert.SerializeObject(assetInfo, jsonSettings);
-            //string bookmarksInfoJson = JsonConvert.SerializeObject(bookmarksInfo, jsonSettings);
-            //Console.WriteLine($"Successfully parsed Panasonic metadata:  (Filename: {Path.GetFileName(metadataPath)})");
-            //Console.WriteLine(assetInfoJson);
-            //Console.WriteLine("\n----------------------------------------------------------------------------------------");
-            //Console.WriteLine($"\nSuccessfully parsed Bookmark metadata: (Filename: {Path.GetFileName(bookmarkPath)})");
-            //Console.WriteLine(bookmarksInfoJson);
-            //Console.WriteLine(assetInfo.MediaType.ToString());
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine($"Error: {ex.Message}");
-            //    if (ex.InnerException != null)
-            //    {
-            //        Console.WriteLine($"Inner Error: {ex.InnerException.Message}");
-            //    }
-            //}
-
-
-
+            #region Old Payload
+            /*
             var payload = new EMV4Asset
             {
                 Categories = new List<Category>(),  // <------EMPTY FOR NOW
@@ -95,13 +77,13 @@ namespace Pana_Data_Console
                         IsOverlaid = false,
                         RecordedByCSV = "admin@getac.com",
 
-                        Files = new List<FileInfo>
+                        Files = new List<File>
                         {
-                            new FileInfo
+                            new File
                             {
                                 //Id = 0,
                                 //AssetId = 0,
-                                FilesId = "65011",
+                                FilesId = 65011,
                                 AccessCode = "XsWmuJeanfoK+Z8vZ3L1csB1RU3NqjLUjDvy+UAonueEyJKQukBEihijmVN11tQ+kAIIQfOoaYQBEKdtDal40w==",
                                 Name = assetInfo.AssetID + "_003",  // <= <= <=
                                 Type = assetInfo.MediaType.ToString(), // <= <= <=
@@ -131,11 +113,14 @@ namespace Pana_Data_Console
                 Tag = (string)null,
                 Version = ""
             };
-            
+            */
+            #endregion
+
+
             //var json = JsonConvert.SerializeObject(payload);
 
-            //var json2 = JsonConvert.SerializeObject(em4Asset);
-            //SendPost(json);
+            var json2 = JsonConvert.SerializeObject(em4Asset);
+            SendPost(json2);
 
             //string payloadJsonFormatted = JsonConvert.SerializeObject(payload, jsonSettings);
 
@@ -148,7 +133,7 @@ namespace Pana_Data_Console
         static void SendPost(string jsonPayload)
         {
             var url = "https://dev-evm4-m.irsavideo.com/api/v1/Evidences";
-            var bearerToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJUZW5hbnRJZCI6IjE5IiwiVXNlcklkIjoiMSIsIkFzc2lnbmVkR3JvdXBzIjoiW3tcIklkXCI6MSxcIlBlcm1pc3Npb25cIjoxfV0iLCJBc3NpZ25lZE1vZHVsZXMiOiIxLDIsMyw0LDUsNiw3LDgsOSwxMCwxMSwxMiwxMywxNCwxNSwxNywxOCwxOSwyMCwyMSwyMiwyMywyNCwyNSwyNiwyNywyOCwyOSwzMCwzMSwzMiwzMywzNCwzNSwzNiwzNywzOCwzOSw0MCw0MSw0Miw0Myw0NCw0NSw0Niw0Nyw0OCw0OSw1MCw1MSw1Miw1Myw1NCw1NSw1Niw1Nyw2MCw2MSw2Miw2Myw2NCw3MCw3MSw3Miw3Myw3NCw3NSw3Nyw3OCw3OSw4MCw4MSw4Miw4Myw4NCw4NSw4Niw4Nyw4OCw4OSw5MCw5MSw5Miw5Myw5NCw5NSw5Niw5Nyw5OCw5OSwxMDEsMTAyLDEwMywxMDQsMTA1LDEwNiwxMDcsMTA5LDExMCwxMTIsMTEzLDExNCwxMTUsMTE2LDExNywxMTgsMTE5LDEyMCwxMjEsMTIyIiwiTG9naW5JZCI6ImFkbWluQGdldGFjLmNvbSIsIkZOYW1lIjoiU3VwZXIiLCJMTmFtZSI6IjEyMyIsIldvcmtzcGFjZUlkIjoiIiwiU3F1YWRJbmZvcyI6IltdIiwibmJmIjoxNzUwNDMzODAxLCJleHAiOjE3NTA0Mzc0MDEsImlhdCI6MTc1MDQzMzgwMX0.XKtDYFq-MLfmAqJct16vyJdAU8dX4dj-xikoQbtK-IU";
+            var bearerToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJUZW5hbnRJZCI6IjE5IiwiVXNlcklkIjoiMSIsIkFzc2lnbmVkR3JvdXBzIjoiW3tcIklkXCI6MSxcIlBlcm1pc3Npb25cIjoxfV0iLCJBc3NpZ25lZE1vZHVsZXMiOiIxLDIsMyw0LDUsNiw3LDgsOSwxMCwxMSwxMiwxMywxNCwxNSwxNywxOCwxOSwyMCwyMSwyMiwyMywyNCwyNSwyNiwyNywyOCwyOSwzMCwzMSwzMiwzMywzNCwzNSwzNiwzNywzOCwzOSw0MCw0MSw0Miw0Myw0NCw0NSw0Niw0Nyw0OCw0OSw1MCw1MSw1Miw1Myw1NCw1NSw1Niw1Nyw2MCw2MSw2Miw2Myw2NCw3MCw3MSw3Miw3Myw3NCw3NSw3Nyw3OCw3OSw4MCw4MSw4Miw4Myw4NCw4NSw4Niw4Nyw4OCw4OSw5MCw5MSw5Miw5Myw5NCw5NSw5Niw5Nyw5OCw5OSwxMDEsMTAyLDEwMywxMDQsMTA1LDEwNiwxMDcsMTA5LDExMCwxMTIsMTEzLDExNCwxMTUsMTE2LDExNywxMTgsMTE5LDEyMCwxMjEsMTIyIiwiTG9naW5JZCI6ImFkbWluQGdldGFjLmNvbSIsIkZOYW1lIjoiU3VwZXIiLCJMTmFtZSI6IjEyMyIsIldvcmtzcGFjZUlkIjoiIiwiU3F1YWRJbmZvcyI6IltdIiwibmJmIjoxNzUwNzc2MzQ2LCJleHAiOjE3NTA3Nzk5NDYsImlhdCI6MTc1MDc3NjM0Nn0.3-t6wUI6tVPzgN0vzRQyKqaWaZSbE1fhlK9Idr072N4";
             using (var client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Clear();

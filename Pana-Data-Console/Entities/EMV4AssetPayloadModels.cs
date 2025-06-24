@@ -35,11 +35,11 @@ namespace Pana_Data_Console.Entities
             public int Value { get; set; }
         }
 
-        public class FileInfo
+        public class File
         {
             public int Id { get; set; }
             public int AssetId { get; set; }
-            public string FilesId { get; set; }
+            public int FilesId { get; set; }
             public string AccessCode { get; set; }
             public string Name { get; set; }
             public string Type { get; set; }
@@ -133,7 +133,7 @@ namespace Pana_Data_Console.Entities
             public bool IsOverlaid { get; set; }
             public string RecordedByCSV { get; set; }
             public string Version { get; set; }
-            public List<FileInfo> Files { get; set; }
+            public List<File> Files { get; set; }
             public string Lock { get; set; } 
 
         }

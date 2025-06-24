@@ -4,8 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using static Pana_Data_Console.Entities.EMV4AssetPayloadModels;
+using File = Pana_Data_Console.Entities.EMV4AssetPayloadModels.File;
 
 namespace Pana_Data_Console
 {
@@ -24,10 +26,12 @@ namespace Pana_Data_Console
             //var mXmlFiles = Directory.EnumerateFiles(folderPath, "*m.xml").ToList();
             //var mXmlDocs = mXmlFiles.ToDictionary(f => Path.GetFileName(f), f => XDocument.Load(f));
 
-            // Map: segment file name (from <F-Name>) => .m.xml doc (if available)
-            // (Assume .m.xml file name matches <F-Name> with .xml extension)
-            // Build segment list from <FileList> in .b.xml
-            var fileList = bDoc.Descendants("FileList").Elements("File").ToList();
+
+            // Build segment list from <FileList> in b.xml
+            var fileList = bDoc.Descendants("FileList")
+                   .Elements("File")
+                   .Where(f => (string)f.Attribute("dtype") != "m")
+                   .ToList();
 
             // Group by split (segment number)
             var segments = fileList.GroupBy(f => (int?)f.Attribute("split") ?? 0)
@@ -35,10 +39,11 @@ namespace Pana_Data_Console
                                    .ToList();
 
             // --- NEW LOGIC: Combine all files into one master asset ---
-            var allFiles = new List<EMV4AssetPayloadModels.FileInfo>();
+            var allFiles = new List<File>();
             DateTime? overallStart = null, overallEnd = null;
             long totalDuration = 0;
             string assetIdMaster = null;
+            string masterAssetName = null;
             string cameraNameMaster = null;
             IRSAMediaTypeEnum? mainMediaTypeMaster = null;
 
@@ -59,8 +64,8 @@ namespace Pana_Data_Console
                     var mediaType = fileElem.GetMediaType();
                     if (mainMediaTypeMaster == null)
                         mainMediaTypeMaster = mediaType;
-                    if (assetIdMaster == null)
-                        assetIdMaster = Path.GetFileNameWithoutExtension(fName);
+                    //if (assetIdMaster == null)
+                    //    assetIdMaster = Path.GetFileNameWithoutExtension(fName);
 
                     // Parse times
                     var recStStr = fileElem.Element("RecST")?.Value;
@@ -81,13 +86,14 @@ namespace Pana_Data_Console
                         fileDuration = (long)(recEt - recSt).TotalMilliseconds;
                     totalDuration += fileDuration;
 
-                    allFiles.Add(new EMV4AssetPayloadModels.FileInfo
+                    allFiles.Add(new File
                     {
-                        FilesId = assetIdMaster,
+                        //FilesId = 0,
+                        AccessCode = "XsWmuJeanfoK+Z8vZ3L1csB1RU3NqjLUjDvy+UAonueEyJKQukBEihijmVN11tQ+kAIIQfOoaYQBEKdtDal40w==",
                         Name = Path.GetFileNameWithoutExtension(fName),
                         Type = mediaType.ToString(),
                         Extension = ext,
-                        URL = null,
+                        URL = $"https://g204redactiontest.blob.core.usgovcloudapi.net/tn-3/us-1/Evidence/{fName}",
                         Size = fileElem.Attribute("size") != null ? long.Parse(fileElem.Attribute("size").Value) : 0,
                         Duration = fileDuration,
                         Recording = new RecordingInfo
@@ -109,11 +115,22 @@ namespace Pana_Data_Console
             //    cameraNameMaster = vInfo?.Element("Recorder")?.Attribute("model")?.Value;
             //}
 
+
+            if (!string.IsNullOrEmpty(allFiles?.FirstOrDefault()?.Name))
+            {
+                var fullName = allFiles.First().Name;
+                var match = Regex.Match(fullName, @"^(.+?_){2}");
+                if (match.Success)
+                {
+                    masterAssetName = match.Value.TrimEnd('_');
+                }
+            }
+
             var master = new Asset
             {
-                Id = assetIdMaster,
+                //Id = assetIdMaster,
                 DeviceTypeCategory = "BodyWorn",
-                Name = assetIdMaster,
+                Name = masterAssetName,
                 TypeOfAsset = mainMediaTypeMaster != null ? mainMediaTypeMaster.ToString() : "Unknown",
                 Status = "Uploading",
                 State = "Normal",
@@ -141,7 +158,7 @@ namespace Pana_Data_Console
 
             var emv4Asset = new EMV4Asset
             {
-                Id = master?.Id,
+                //Id = master?.Id,
                 Categories = new List<Category>(),
                 SecurityDescriptors = new List<SecurityDescriptor>(),
                 Assets = new Assets
@@ -149,7 +166,7 @@ namespace Pana_Data_Console
                     Master = master,
                     Children = children
                 },
-                StationId = new CMTFieldValueWrapper { Value = 0 },
+                StationId = new CMTFieldValueWrapper { Value = 210104 },
                 Tag = null,
                 Version = ""
             };
