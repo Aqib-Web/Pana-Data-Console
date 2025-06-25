@@ -1,11 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Xml.Linq;
 using Newtonsoft.Json;
-using static Pana_Data_Console.Entities.EMV4AssetPayloadModels;
+using System;
 
 namespace Pana_Data_Console
 {
@@ -13,17 +7,17 @@ namespace Pana_Data_Console
     {
         static void Main(string[] args)
         {
-                string folderPath = @"D:\101209715";
+            string folderPath = @"D:\101209715";
             
-                var newParser = new PanasonicFolderParser();
-                var em4Asset = newParser.ParseFolder(folderPath);
+            var em4Asset = PanasonicFolderParser.ParseFolder(folderPath);
+            var json = JsonConvert.SerializeObject(em4Asset);
  
-                // JSON pretty printing setting
-                var jsonSettings = new JsonSerializerSettings
-                {
-                    Formatting = Formatting.Indented,
-                    //NullValueHandling = NullValueHandling.Ignore
-                };
+            // JSON pretty printing setting
+            var jsonSettings = new JsonSerializerSettings
+            {
+                Formatting = Formatting.Indented,
+                NullValueHandling = NullValueHandling.Ignore
+            };
 
             #region Old Payload
             /*
@@ -111,27 +105,12 @@ namespace Pana_Data_Console
             string payloadJsonFormatted = JsonConvert.SerializeObject(em4Asset, jsonSettings);
             Console.WriteLine(payloadJsonFormatted);
 
-            var json = JsonConvert.SerializeObject(em4Asset);
-            //SendPost(json);
+            //ApiClient.PostEvidenceToEVM4(json);
+
 
             Console.ReadKey();
         }
 
-        static void SendPost(string jsonPayload)
-        {
-            var url = "https://dev-evm4-m.irsavideo.com/api/v1/Evidences";
-            var bearerToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJUZW5hbnRJZCI6IjE5IiwiVXNlcklkIjoiMSIsIkFzc2lnbmVkR3JvdXBzIjoiW3tcIklkXCI6MSxcIlBlcm1pc3Npb25cIjoxfV0iLCJBc3NpZ25lZE1vZHVsZXMiOiIxLDIsMyw0LDUsNiw3LDgsOSwxMCwxMSwxMiwxMywxNCwxNSwxNywxOCwxOSwyMCwyMSwyMiwyMywyNCwyNSwyNiwyNywyOCwyOSwzMCwzMSwzMiwzMywzNCwzNSwzNiwzNywzOCwzOSw0MCw0MSw0Miw0Myw0NCw0NSw0Niw0Nyw0OCw0OSw1MCw1MSw1Miw1Myw1NCw1NSw1Niw1Nyw2MCw2MSw2Miw2Myw2NCw3MCw3MSw3Miw3Myw3NCw3NSw3Nyw3OCw3OSw4MCw4MSw4Miw4Myw4NCw4NSw4Niw4Nyw4OCw4OSw5MCw5MSw5Miw5Myw5NCw5NSw5Niw5Nyw5OCw5OSwxMDEsMTAyLDEwMywxMDQsMTA1LDEwNiwxMDcsMTA5LDExMCwxMTIsMTEzLDExNCwxMTUsMTE2LDExNywxMTgsMTE5LDEyMCwxMjEsMTIyIiwiTG9naW5JZCI6ImFkbWluQGdldGFjLmNvbSIsIkZOYW1lIjoiU3VwZXIiLCJMTmFtZSI6IjEyMyIsIldvcmtzcGFjZUlkIjoiIiwiU3F1YWRJbmZvcyI6IltdIiwibmJmIjoxNzUwNzc2MzQ2LCJleHAiOjE3NTA3Nzk5NDYsImlhdCI6MTc1MDc3NjM0Nn0.3-t6wUI6tVPzgN0vzRQyKqaWaZSbE1fhlK9Idr072N4";
-            using (var client = new HttpClient())
-            {
-                client.DefaultRequestHeaders.Clear();
-                client.DefaultRequestHeaders.Add("Authorization", $"Bearer {bearerToken}");
 
-                var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
-                var response = client.PostAsync(url, content).Result;
-
-                Console.WriteLine("Status: " + response.StatusCode);
-                Console.WriteLine("Response: " + response.Content.ReadAsStringAsync().Result);
-            }
-        }
     }
 }

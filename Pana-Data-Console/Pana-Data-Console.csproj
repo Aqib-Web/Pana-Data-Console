@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiClient.cs" />
     <Compile Include="Common\Helper.cs" />
     <Compile Include="Entities\EMV4AssetPayloadModels.cs" />
     <Compile Include="Entities\CommonEntities.cs" />
@@ -55,10 +56,6 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="MetaFiles\000b.xml" />
-    <Content Include="MetaFiles\000m.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

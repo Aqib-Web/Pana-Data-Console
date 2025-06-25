@@ -13,18 +13,14 @@ namespace Pana_Data_Console
 {
     public class PanasonicFolderParser
     {
-        public EMV4Asset ParseFolder(string folderPath)
+        public static EMV4Asset ParseFolder(string folderPath)
         {
-
+            //Static Values
             string ACCESS_CODE = "XsWmuJeanfoK+Z8vZ3L1csB1RU3NqjLUjDvy+UAonueEyJKQukBEihijmVN11tQ+kAIIQfOoaYQBEKdtDal40w==";
             int OWNER_VALUE = 1;
-            int STATION_ID_VALUE = 210104;
+            int STATION_ID_VALUE = 210108;
             int UNIT_ID = 1;
-            string EVM4_URL = "https://g204redactiontest.blob.core.usgovcloudapi.net/tn-3/us-1/Evidence/";
-
-
-
-
+            string EVM4_URL = "https://g204redactiontest.blob.core.usgovcloudapi.net/tn-3/us-1/Evidence";
 
             // Find the *b.xml file (main event/segment list)
             var bXmlPath = Directory.EnumerateFiles(folderPath, "*b.xml").FirstOrDefault();
@@ -66,8 +62,8 @@ namespace Pana_Data_Console
                         Console.WriteLine($"Warning: File not found: {filePath}");
                         continue;
                     }
-                    var ext = Path.GetExtension(fName);
-                    var mediaType = fileElem.GetMediaType();
+                    var ext = Path.GetExtension(fName); //Get Extension
+                    var mediaType = fileElem.GetMediaType(); //Get MediaType
                     if (mainMediaTypeMaster == null)
                         mainMediaTypeMaster = mediaType;
 
@@ -75,6 +71,7 @@ namespace Pana_Data_Console
                     var recStStr = fileElem.Element("RecST")?.Value;
                     var recEtStr = fileElem.Element("RecET")?.Value;
                     DateTime recSt, recEt;
+
                     if (DateTime.TryParse(recStStr, out recSt))
                     {
                         if (overallStart == null || recSt < overallStart)
@@ -85,8 +82,8 @@ namespace Pana_Data_Console
                         if (overallEnd == null || recEt > overallEnd)
                             overallEnd = recEt;
                     }
-
-
+                    
+                    // Calculate Duration
                     long fileDuration = 0;
                     if (recStStr != null && recEtStr != null && DateTime.TryParse(recStStr, out recSt) && DateTime.TryParse(recEtStr, out recEt))
                         fileDuration = (long)(recEt - recSt).TotalMilliseconds;
@@ -115,15 +112,7 @@ namespace Pana_Data_Console
                 }
             }
 
-            // Try to get camera name from .m.xml if available
-            //if (mXmlDocs.Count > 0)
-            //{
-            //    var mDoc = mXmlDocs.Values.FirstOrDefault();
-            //    var vInfo = mDoc?.Descendants("V-Info").FirstOrDefault();
-            //    cameraNameMaster = vInfo?.Element("Recorder")?.Attribute("model")?.Value;
-            //}
-
-
+            //Get MasterAsset Name
             if (!string.IsNullOrEmpty(allFiles?.FirstOrDefault()?.Name))
             {
                 var fullName = allFiles.First().Name;
@@ -156,6 +145,25 @@ namespace Pana_Data_Console
                 }
             }
 
+            // Find the *m.xml files
+            var mXmlFiles = Directory.EnumerateFiles(folderPath, "*m.xml").ToList();
+            var mXmlDocs = mXmlFiles.ToDictionary(f => Path.GetFileName(f), f => XDocument.Load(f));
+
+            //Try to get camera name from *m.xml if available
+            var firstMXmlDoc = mXmlDocs.Values.FirstOrDefault();
+
+            if (firstMXmlDoc != null)
+            {
+                string videoChannel = fileList.First(f => f.Attribute("dtype")?.Value == "v")
+                    .Attribute("ch")?.Value;
+
+                string cameraName = firstMXmlDoc
+                    .Descendants("CameraIn")
+                    .FirstOrDefault(c => c.Attribute("id")?.Value == videoChannel)?
+                    .Element("Name")?.Value;
+
+                cameraNameMaster = cameraName;
+            }
 
             var master = new Asset
             {
@@ -188,6 +196,7 @@ namespace Pana_Data_Console
                 Lock = null,
                 Version = ""
             };
+
             var children = new List<Asset>();
 
             var emv4Asset = new EMV4Asset
