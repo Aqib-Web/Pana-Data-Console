@@ -17,8 +17,8 @@ namespace Pana_Data_Console.Entities
 
         public class Buffering
         {
-            public int Pre { get; set; }
-            public int Post { get; set; }
+            public long Pre { get; set; }
+            public long Post { get; set; }
         }
 
         public class Checksum

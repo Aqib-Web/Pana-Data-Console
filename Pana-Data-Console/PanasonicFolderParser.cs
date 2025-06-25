@@ -15,17 +15,23 @@ namespace Pana_Data_Console
     {
         public EMV4Asset ParseFolder(string folderPath)
         {
-            // Find the .b.xml file (main event/segment list)
+
+            string ACCESS_CODE = "XsWmuJeanfoK+Z8vZ3L1csB1RU3NqjLUjDvy+UAonueEyJKQukBEihijmVN11tQ+kAIIQfOoaYQBEKdtDal40w==";
+            int OWNER_VALUE = 1;
+            int STATION_ID_VALUE = 210104;
+            int UNIT_ID = 1;
+            string EVM4_URL = "https://g204redactiontest.blob.core.usgovcloudapi.net/tn-3/us-1/Evidence/";
+
+
+
+
+
+            // Find the *b.xml file (main event/segment list)
             var bXmlPath = Directory.EnumerateFiles(folderPath, "*b.xml").FirstOrDefault();
             if (bXmlPath == null)
-                throw new FileNotFoundException("No .b.xml file found in folder.");
+                throw new FileNotFoundException("No *b.xml file found in folder.");
 
             var bDoc = XDocument.Load(bXmlPath);
-
-            // Find all .m.xml files (segment metadata)
-            //var mXmlFiles = Directory.EnumerateFiles(folderPath, "*m.xml").ToList();
-            //var mXmlDocs = mXmlFiles.ToDictionary(f => Path.GetFileName(f), f => XDocument.Load(f));
-
 
             // Build segment list from <FileList> in b.xml
             var fileList = bDoc.Descendants("FileList")
@@ -42,7 +48,6 @@ namespace Pana_Data_Console
             var allFiles = new List<File>();
             DateTime? overallStart = null, overallEnd = null;
             long totalDuration = 0;
-            string assetIdMaster = null;
             string masterAssetName = null;
             string cameraNameMaster = null;
             IRSAMediaTypeEnum? mainMediaTypeMaster = null;
@@ -52,6 +57,7 @@ namespace Pana_Data_Console
                 int sequence = segment.Key;
                 foreach (var fileElem in segment)
                 {
+                    //Parse FileName
                     var fName = fileElem.Element("F-Name")?.Value;
                     if (string.IsNullOrEmpty(fName)) continue;
                     var filePath = Path.Combine(folderPath, fName);
@@ -64,8 +70,6 @@ namespace Pana_Data_Console
                     var mediaType = fileElem.GetMediaType();
                     if (mainMediaTypeMaster == null)
                         mainMediaTypeMaster = mediaType;
-                    //if (assetIdMaster == null)
-                    //    assetIdMaster = Path.GetFileNameWithoutExtension(fName);
 
                     // Parse times
                     var recStStr = fileElem.Element("RecST")?.Value;
@@ -81,19 +85,23 @@ namespace Pana_Data_Console
                         if (overallEnd == null || recEt > overallEnd)
                             overallEnd = recEt;
                     }
+
+
                     long fileDuration = 0;
                     if (recStStr != null && recEtStr != null && DateTime.TryParse(recStStr, out recSt) && DateTime.TryParse(recEtStr, out recEt))
                         fileDuration = (long)(recEt - recSt).TotalMilliseconds;
-                    totalDuration += fileDuration;
+                    if(mediaType == IRSAMediaTypeEnum.Video) 
+                        totalDuration += fileDuration;
+
+                    
 
                     allFiles.Add(new File
                     {
-                        //FilesId = 0,
-                        AccessCode = "XsWmuJeanfoK+Z8vZ3L1csB1RU3NqjLUjDvy+UAonueEyJKQukBEihijmVN11tQ+kAIIQfOoaYQBEKdtDal40w==",
+                        AccessCode = ACCESS_CODE,
                         Name = Path.GetFileNameWithoutExtension(fName),
                         Type = mediaType.ToString(),
                         Extension = ext,
-                        URL = $"https://g204redactiontest.blob.core.usgovcloudapi.net/tn-3/us-1/Evidence/{fName}",
+                        URL = $"{EVM4_URL}{fName}",
                         Size = fileElem.Attribute("size") != null ? long.Parse(fileElem.Attribute("size").Value) : 0,
                         Duration = fileDuration,
                         Recording = new RecordingInfo
@@ -126,15 +134,37 @@ namespace Pana_Data_Console
                 }
             }
 
+            // Calculate pre-buffer duration (RecST - PreST) from the first video file in split=0
+            long preBuffer = 0;
+
+            var firstVideoFile = bDoc.Descendants("FileList")
+                                     .Elements("File")
+                                     .Where(f => (string)f.Attribute("split") == "0" &&
+                                                 (string)f.Attribute("dtype") == "v")
+                                     .FirstOrDefault();
+
+            if (firstVideoFile != null)
+            {
+                var preStStr = firstVideoFile.Element("PreST")?.Value;
+                var recStStr = firstVideoFile.Element("RecST")?.Value;
+
+                if (DateTime.TryParse(preStStr, out var preSt) &&
+                    DateTime.TryParse(recStStr, out var recSt) &&
+                    recSt > preSt)
+                {
+                    preBuffer = (long)(recSt - preSt).TotalMilliseconds;
+                }
+            }
+
+
             var master = new Asset
             {
-                //Id = assetIdMaster,
                 DeviceTypeCategory = "BodyWorn",
                 Name = masterAssetName,
                 TypeOfAsset = mainMediaTypeMaster != null ? mainMediaTypeMaster.ToString() : "Unknown",
                 Status = "Uploading",
                 State = "Normal",
-                UnitId = 1,
+                UnitId = UNIT_ID,
                 IsRestrictedView = false,
                 Duration = totalDuration,
                 Recording = new RecordingInfo
@@ -142,8 +172,12 @@ namespace Pana_Data_Console
                     Started = overallStart ?? DateTime.MinValue,
                     Ended = overallEnd ?? DateTime.MinValue
                 },
-                Buffering = new Buffering { Pre = 0, Post = 0 },
-                Owners = new List<CMTFieldValueWrapper> { new CMTFieldValueWrapper { Value = 1 } },
+                Buffering = new Buffering
+                {
+                    Pre = preBuffer,
+                    Post = 0
+                },
+                Owners = new List<CMTFieldValueWrapper> { new CMTFieldValueWrapper { Value = OWNER_VALUE } },
                 BookMarks = new List<BookMark>(),
                 Notes = new List<Note>(),
                 AudioDevice = null,
@@ -158,7 +192,6 @@ namespace Pana_Data_Console
 
             var emv4Asset = new EMV4Asset
             {
-                //Id = master?.Id,
                 Categories = new List<Category>(),
                 SecurityDescriptors = new List<SecurityDescriptor>(),
                 Assets = new Assets
@@ -166,7 +199,7 @@ namespace Pana_Data_Console
                     Master = master,
                     Children = children
                 },
-                StationId = new CMTFieldValueWrapper { Value = 210104 },
+                StationId = new CMTFieldValueWrapper { Value = STATION_ID_VALUE },
                 Tag = null,
                 Version = ""
             };

@@ -13,20 +13,12 @@ namespace Pana_Data_Console
     {
         static void Main(string[] args)
         {
-            //try
-            //{
-                string metadataPath = @"C:\Users\Muhammad.aqib\source\repos\Pana-Data-Console\Pana-Data-Console\MetaFiles\000m.xml";
-                string bookmarkPath = @"C:\Users\Muhammad.aqib\source\repos\Pana-Data-Console\Pana-Data-Console\MetaFiles\000b.xml";
                 string folderPath = @"D:\101209715";
-
-                var parser = new PanasonicMetadataParser();
+            
                 var newParser = new PanasonicFolderParser();
                 var em4Asset = newParser.ParseFolder(folderPath);
-
-                var assetInfo = parser.ParseMetadata(metadataPath, bookmarkPath);
-                var bookmarksInfo = parser.ParseBookmark(bookmarkPath);
-
-                // Convert to JSON with pretty printing
+ 
+                // JSON pretty printing setting
                 var jsonSettings = new JsonSerializerSettings
                 {
                     Formatting = Formatting.Indented,
@@ -116,17 +108,12 @@ namespace Pana_Data_Console
             */
             #endregion
 
+            string payloadJsonFormatted = JsonConvert.SerializeObject(em4Asset, jsonSettings);
+            Console.WriteLine(payloadJsonFormatted);
 
-            //var json = JsonConvert.SerializeObject(payload);
+            var json = JsonConvert.SerializeObject(em4Asset);
+            //SendPost(json);
 
-            var json2 = JsonConvert.SerializeObject(em4Asset);
-            SendPost(json2);
-
-            //string payloadJsonFormatted = JsonConvert.SerializeObject(payload, jsonSettings);
-
-            string payloadJsonFormatted2 = JsonConvert.SerializeObject(em4Asset, jsonSettings);
-            //Console.WriteLine(payloadJsonFormatted);
-            Console.WriteLine(payloadJsonFormatted2);
             Console.ReadKey();
         }
 
